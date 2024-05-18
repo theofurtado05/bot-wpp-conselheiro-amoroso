@@ -1,10 +1,12 @@
-import UserDao from "../dao/UserDao";
+import {UserDao} from "../dao/UserDao.js";
+const userDao = new UserDao()
 
-export class UserController{
+
+class UserController{
     async createUser(data){
         try {
             if(data.phone && data.email){
-                const newUser = await UserDao.createUser(data)
+                const newUser = await userDao.createUser(data)
                 return newUser
             } else {
                 return "Phone and Email are required fields."
@@ -14,3 +16,5 @@ export class UserController{
         }
     }
 }
+
+export {UserController}

@@ -1,16 +1,50 @@
-import { User } from "../model/User"
-import { prisma } from "../service/dbConfig"
+import { User } from "../model/User.js"
+import { prisma } from "../service/dbConfig.js"
 
 class UserDao{
     async createUser(data){
         try {
-            const user = User(data.created_at, data.email, data.phone, data.currentPlan, data.subscription_at)
+            const user = User(data.created_at, data.email, data.phone, data.currentPlan, data.subscription_at, data.numMsgSent)
     
             const newUser = await prisma.users.create({
                 data: user
             })
     
             return newUser
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async addMsgOnUser(phone){
+        try {
+            const user = await prisma.users.update({
+                where: {
+                    phone: phone
+                },
+                data: {
+                    numMsgSent: {
+                        increment: 1
+                    }
+                }
+            })
+
+            return user
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async updateUser(phone, data){
+        try {
+            const user = await prisma.users.update({
+                where: {
+                    phone: phone
+                },
+                data: data
+            })
+
+            return user
         } catch (error) {
             throw error
         }
@@ -70,4 +104,4 @@ class UserDao{
 }
 
 
-export default new UserDao()
+export {UserDao}

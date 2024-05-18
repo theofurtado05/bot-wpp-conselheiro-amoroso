@@ -15,4 +15,5 @@ model Users {
   phone           String?   @unique @db.VarChar
   currentPlan     String?   @db.VarChar
   subscription_at DateTime? @db.Timestamp(6)
+  numMsgSent     Int       @default(0)
 }

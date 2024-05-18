@@ -1,11 +1,9 @@
 import express from 'express'
-import {UserController} from '../controller/UserController'
+import { UserController } from '../controller/UserController.js'
 
 const router = express.Router()
 const userController = new UserController()
 
-router.get('/', (req, res) => {
-    res.send('Welcome to User API')
-})
+router.post("/create", userController.createUser);
 
 export default router

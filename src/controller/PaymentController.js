@@ -6,15 +6,26 @@ class PaymentController {
         email: data.email,
         phone: data.phone,
         currentPlan: data.currentPlan ?? "Monthly",
-        subscription_at: new Date()
+        subscription_at: new Date(),
+        numMsgSent: 0
     }
     try {
         if(data.event == 'Aproved'){
-            const newUser = await UserDao.createUser(userInfo)
-            return res.status(200).send({
-                message: "User created successfully",
-                data: newUser
-            })
+            if(UserDao.getUserByPhone(data.phone)){
+                //update no currentPlan
+                const updatedUser = await UserDao.updateUser(data.phone, {
+                    currentPlan: userInfo.currentPlan,
+                    subscription_at: userInfo.subscription_at,
+                    email: userInfo.email
+                })
+            } else {
+                const newUser = await UserDao.createUser(userInfo)
+                return res.status(200).send({
+                    message: "User created successfully",
+                    data: newUser
+                })
+            }
+            
         } else {
             return res.status(400).send({
                 message: "Invalid event"
@@ -28,3 +39,5 @@ class PaymentController {
     }
   }
 }
+
+export {PaymentController}
