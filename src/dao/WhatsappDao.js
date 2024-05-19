@@ -1,5 +1,9 @@
 import venom from 'venom-bot';
-import { formatarPhoneNumber } from '../utils/formatarPhoneNumber';
+import { formatarPhoneNumber } from '../utils/formatarPhoneNumber.js';
+import { UserDao } from './UserDao.js';
+import { formatarSemUC } from '../utils/formatarSemUC.js';
+
+const userDao = new UserDao()
 
 class WhatsappDao {
     async start(client) {
@@ -7,14 +11,40 @@ class WhatsappDao {
           console.log("Mensagem recebida: ", message)
             const sender = message.sender  // id é o numero@c.us
             const mensagem = message.body
-          //verificar se tem esse sender no banco
-          //se nao tiver, cria-lo e ja adicionar uma mensagem
-            //responde-lo com conselho
-          //se sim, verificar quantas mensagens ele tem
-            // se tiver menos que 2, responde-lo com um conselho
-            // se nao, mandar a mensagem para assinar
+            const user = await userDao.getUserByPhone(formatarSemUC(sender.id))
+            console.log("User: ", user)
+            if(user){
+              if(user.currentPlan != 'Free'){
+                //responder com conselho
+                await this.SendMessageConselho(client, {phone: sender.id})
+                await userDao.addMsgOnUser(formatarSemUC(sender.id))
+                
+              } else if (user.numMsgSent < 2){
+                //responder com conselho
+                await this.SendMessageConselho(client, {phone: sender.id})
+                await userDao.addMsgOnUser(formatarSemUC(sender.id))
+
+              } else {
+                //mandar assinar
+                await this.SendMessageNoSubscription(client, {phone: sender.id})
+              }
+            } else {
+                const newUser = await userDao.createUser({
+                  created_at: new Date(), 
+                  email: null, 
+                  phone: formatarSemUC(sender.id), 
+                  currentPlan: 'Free', 
+                  subscription_at: new Date(), 
+                  numMsgSent: 1
+                })
+
+                console.log("Novo usuario: ", newUser)
+                await this.SendMessageConselho(client, {phone: sender.id})
+            }
+      
+          
             
-            // await this.SendMessageNoSubscription(client, {phone: sender.id})
+            
         });
       }
     //criar sessao
@@ -38,6 +68,21 @@ class WhatsappDao {
     async SendMessageNoSubscription(client, user){
         try {
             client.sendText(`${formatarPhoneNumber(user.phone)}`, 'Assine o conselheiro amoroso para continuar!')
+            .then((result) => {
+              console.log('Result: ', result); //return object success
+            })
+            .catch((erro) => {
+              console.error('Error when sending: ', erro); //return object error
+            });
+            return
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async SendMessageConselho(client, user){
+        try {
+            client.sendText(`${formatarPhoneNumber(user.phone)}`, 'Seu conselho é: "Seja você mesmo"')
             .then((result) => {
               console.log('Result: ', result); //return object success
             })

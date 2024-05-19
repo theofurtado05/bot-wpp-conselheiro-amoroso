@@ -4,8 +4,8 @@ import { prisma } from "../service/dbConfig.js"
 class UserDao{
     async createUser(data){
         try {
-            const user = User(data.created_at, data.email, data.phone, data.currentPlan, data.subscription_at, data.numMsgSent)
-    
+            const user = new User(data.created_at, data.email, data.phone, data.currentPlan, data.subscription_at, data.numMsgSent)
+            console.log("User sendo criado: ", user)
             const newUser = await prisma.users.create({
                 data: user
             })
