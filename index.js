@@ -10,8 +10,8 @@ const whatsapp = new WhatsappDao()
 
 app.use(cors());
 app.use(express.json());
-// app.use('/user', userRoutes)
-// app.use('/payment', paymentRoutes)
+app.use('/user', userRoutes)
+app.use('/payment', paymentRoutes) 
 
 app.get('/', (req, res) => {
     res.send('API Online!');

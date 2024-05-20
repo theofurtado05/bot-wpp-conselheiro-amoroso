@@ -8,21 +8,28 @@ const userDao = new UserDao()
 class WhatsappDao {
     async start(client) {
         client.onMessage(async (message) => {
-          console.log("Mensagem recebida: ", message)
+          // console.log("Mensagem recebida: ", message)
             const sender = message.sender  // id é o numero@c.us
             const mensagem = message.body
             //enviar mensagem para aguardar a resposta "ja vamos te responder, so um momentinho..."
-            await this.SendMensagemDeAguardo(client, {phone: sender.id})
             const user = await userDao.getUserByPhone(formatarSemUC(sender.id))
-            console.log("User: ", user)
-            if(user){
+
+            if(mensagem == '!testegratis'){
+              await this.SendMensagemIniciarTesteGratis(client, {phone: sender.id})
+              await userDao.addMsgOnUser(formatarSemUC(sender.id))
+              return
+            } else if(user && user.numMsgSent > 0){
+              // await this.SendMensagemDeAguardo(client, {phone: sender.id})
+
               if(user.currentPlan != 'Free'){
                 //responder com conselho
+                
                 await this.SendMessageConselho(client, {phone: sender.id})
                 await userDao.addMsgOnUser(formatarSemUC(sender.id))
                 
-              } else if (user.numMsgSent < 2){
+              } else if (user.numMsgSent < 3){
                 //responder com conselho
+                // await this.SendMensagemDeAguardo(client, {phone: sender.id})
                 await this.SendMessageConselho(client, {phone: sender.id})
                 await userDao.addMsgOnUser(formatarSemUC(sender.id))
 
@@ -32,16 +39,21 @@ class WhatsappDao {
               }
             } else {
               //logica de primeira mensagem aqui
-                const newUser = await userDao.createUser({
-                  created_at: new Date(), 
-                  email: null, 
-                  phone: formatarSemUC(sender.id), 
-                  currentPlan: 'Free', 
-                  subscription_at: new Date(), 
-                  numMsgSent: 0
-                })
+                if(!user){
+                  const newUser = await userDao.createUser({
+                    created_at: new Date(), 
+                    email: null, 
+                    phone: formatarSemUC(sender.id), 
+                    currentPlan: 'Free', 
+                    subscription_at: new Date(), 
+                    numMsgSent: 0
+                  })
+                }
+                
 
-                console.log("Novo usuario: ", newUser)
+                // console.log("Novo usuario: ", newUser)
+
+                await this.SendMensagemBoasVindas(client, {phone: sender.id})
                 // await this.SendMessageConselho(client, {phone: sender.id})
             }
 
@@ -67,7 +79,7 @@ class WhatsappDao {
 
   async SendMessageNoSubscription(client, user){
       try {
-          client.sendText(`${formatarPhoneNumber(user.phone)}`, 'Assine o conselheiro amoroso para continuar!')
+          client.sendText(`${formatarPhoneNumber(user.phone)}`, 'Assine o conselheiro amoroso para continuar! https://ejetaragua.com')
           .then((result) => {
             console.log('Result: ', result); //return object success
           })
@@ -92,6 +104,25 @@ class WhatsappDao {
         return
     } catch (error) {
         throw error
+    }
+  }
+  
+  async SendMensagemBoasVindas(client, user) {
+    try {
+  
+      // Certifique-se de formatar o número de telefone corretamente
+      const formattedPhone = formatarPhoneNumber(user.phone);
+  
+      await client.sendText(`${formatarPhoneNumber(user.phone)}`, 'Seja bem vindo ao Flertai, seu novo Conselheiro Amoroso! \nDigite "!testegratis" para receber 2 conselhos grátis!')
+      .then((result) => {
+        console.log('Result: ', result)
+      })
+      .catch((erro) => {
+        console.error('Error when sending: ', erro)
+        
+      });
+    } catch (error) {
+      throw error;
     }
   }
 

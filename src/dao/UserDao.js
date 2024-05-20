@@ -5,7 +5,7 @@ class UserDao{
     async createUser(data){
         try {
             const user = new User(data.created_at, data.email, data.phone, data.currentPlan, data.subscription_at, data.numMsgSent)
-            console.log("User sendo criado: ", user)
+            // console.log("User sendo criado: ", user)
             const newUser = await prisma.users.create({
                 data: user
             })
