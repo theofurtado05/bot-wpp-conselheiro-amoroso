@@ -1,6 +1,6 @@
 class PaymentController {
  
-  async webhookGeneric(req, res){
+  async webhookKirvano(req, res){
     const data = req.body
     const userInfo = {
         email: data.email,

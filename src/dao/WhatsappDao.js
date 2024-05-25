@@ -2,6 +2,7 @@ import venom from 'venom-bot';
 import { formatarPhoneNumber } from '../utils/formatarPhoneNumber.js';
 import { UserDao } from './UserDao.js';
 import { formatarSemUC } from '../utils/formatarSemUC.js';
+import { darConselhosAmorosos } from '../service/openai.js';
 
 const userDao = new UserDao()
 
@@ -14,7 +15,8 @@ class WhatsappDao {
             //enviar mensagem para aguardar a resposta "ja vamos te responder, so um momentinho..."
             const user = await userDao.getUserByPhone(formatarSemUC(sender.id))
 
-            if(mensagem == '!testegratis'){
+            if(mensagem == '!testegratis' && user.numMsgSent < 2){
+              
               await this.SendMensagemIniciarTesteGratis(client, {phone: sender.id})
               await userDao.addMsgOnUser(formatarSemUC(sender.id))
               return
@@ -24,13 +26,13 @@ class WhatsappDao {
               if(user.currentPlan != 'Free'){
                 //responder com conselho
                 
-                await this.SendMessageConselho(client, {phone: sender.id})
+                await this.SendMessageConselho(client, {phone: sender.id}, mensagem)
                 await userDao.addMsgOnUser(formatarSemUC(sender.id))
                 
               } else if (user.numMsgSent < 3){
                 //responder com conselho
                 // await this.SendMensagemDeAguardo(client, {phone: sender.id})
-                await this.SendMessageConselho(client, {phone: sender.id})
+                await this.SendMessageConselho(client, {phone: sender.id}, mensagem)
                 await userDao.addMsgOnUser(formatarSemUC(sender.id))
 
               } else {
@@ -141,9 +143,11 @@ class WhatsappDao {
     }
   }
 
-  async SendMessageConselho(client, user){
+  async SendMessageConselho(client, user, mensagem){
       try {
-          client.sendText(`${formatarPhoneNumber(user.phone)}`, 'Seu conselho é: "Seja você mesmo"')
+        const conselho = await darConselhosAmorosos(mensagem)
+
+          client.sendText(`${formatarPhoneNumber(user.phone)}`, `Seu conselho é: \n ${conselho}`)
           .then((result) => {
             console.log('Result: ', result); //return object success
           })
