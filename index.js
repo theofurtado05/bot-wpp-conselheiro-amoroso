@@ -14,7 +14,8 @@ app.use('/user', userRoutes)
 app.use('/payment', paymentRoutes) 
 
 app.get('/', (req, res) => {
-    res.send('API Online!!');
+    res.send('API Online!');
+    
 });
 
 app.listen(PORT, async () => {
