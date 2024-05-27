@@ -27,9 +27,23 @@ class PaymentController {
             }
             
         } else {
-            return res.status(400).send({
-                message: "Invalid event"
-            })
+            if(UserDao.getUserByPhone(data.phone)){
+                //update no currentPlan
+                const updatedUser = await UserDao.updateUser(data.phone, {
+                    currentPlan: "Free",
+                    subscription_at: userInfo.subscription_at,
+                    email: userInfo.email
+                })
+                return res.status(200).send({
+                    message: "Pagamento pendente: " + data.event + userInfo.email
+                })
+            } else {
+                const newUser = await UserDao.createUser(userInfo)
+                return res.status(200).send({
+                    message: "User created successfully",
+                    data: newUser
+                })
+            }
         }
     } catch (error) {
         return res.status(500).send({
