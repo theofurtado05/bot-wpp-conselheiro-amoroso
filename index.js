@@ -15,11 +15,12 @@ app.use('/payment', paymentRoutes)
 
 app.get('/', (req, res) => {
     res.send('API Online!');
-    
+
 });
 
 app.listen(PORT, async () => {
     console.log(`Server is running on port ${PORT}`)
     // const client = await whatsapp.createSession()
+    //..
     // console.log(client)
 })
