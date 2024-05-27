@@ -64,14 +64,21 @@ class WhatsappDao {
     //criar sessao
   async createSession(){
       try {
+          // const client = await venom.create({
+          //     session: 'conselheiro-amoroso',
+          //     headless: 'new',
+          //     args: ['--no-sandbox', '--disable-setuid-sandbox'],
+          //     // puppeteerOptions: {
+          //     // // executablePath: '/usr/bin/google-chrome-stable',
+          //     // }
+          // })
           const client = await venom.create({
-              session: 'conselheiro-amoroso',
-              headless: 'new',
-              args: ['--no-sandbox', '--disable-setuid-sandbox'],
-              // puppeteerOptions: {
-              // // executablePath: '/usr/bin/google-chrome-stable',
-              // }
-          })
+            session: 'conselheiro-amoroso',
+            headless: 'new',
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            browserArgs: ['--no-sandbox', '--disable-setuid-sandbox'],
+            executablePath: '/usr/bin/chromium-browser'
+        });
           this.start(client)
           return client
       } catch (error) {
