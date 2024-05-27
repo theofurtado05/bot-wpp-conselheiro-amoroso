@@ -76,9 +76,9 @@ class WhatsappDao {
             session: 'conselheiro-amoroso',
             headless: 'new',
             args: ['--no-sandbox', '--disable-setuid-sandbox'],
-            browserArgs: ['--no-sandbox', '--disable-setuid-sandbox'],
             executablePath: '/usr/bin/chromium-browser'
-        });
+          });
+        
           this.start(client)
           return client
       } catch (error) {
