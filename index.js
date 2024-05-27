@@ -5,7 +5,7 @@ import cors from 'cors'; // Importe o pacote cors
 import { WhatsappDao } from './src/dao/WhatsappDao.js'
 
 const app = express()
-const PORT = 9002
+const PORT = 8080
 const whatsapp = new WhatsappDao()
 
 app.use(cors());
