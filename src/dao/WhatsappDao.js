@@ -15,7 +15,7 @@ class WhatsappDao {
             //enviar mensagem para aguardar a resposta "ja vamos te responder, so um momentinho..."
             const user = await userDao.getUserByPhone(formatarSemUC(sender.id))
 
-            if(mensagem == '!testegratis' && user.numMsgSent < 2){
+            if((mensagem == '!testegratis' || mensagem == '"!testegratis"') && user.numMsgSent < 2){
               
               await this.SendMensagemIniciarTesteGratis(client, {phone: sender.id})
               await userDao.addMsgOnUser(formatarSemUC(sender.id))
