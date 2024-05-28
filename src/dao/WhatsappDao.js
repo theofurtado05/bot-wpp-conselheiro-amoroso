@@ -21,7 +21,7 @@ class WhatsappDao {
               await userDao.addMsgOnUser(formatarSemUC(sender.id))
               return
             } else if(user && user.numMsgSent > 0){
-              // await this.SendMensagemDeAguardo(client, {phone: sender.id})
+              await this.SendMensagemDeAguardo(client, {phone: sender.id})
 
               if(user.currentPlan != 'Free'){
                 //responder com conselho
@@ -51,14 +51,8 @@ class WhatsappDao {
                     numMsgSent: 0
                   })
                 }
-                
-
-                // console.log("Novo usuario: ", newUser)
-
                 await this.SendMensagemBoasVindas(client, {phone: sender.id})
-                // await this.SendMessageConselho(client, {phone: sender.id})
             }
-
         });
       }
     //criar sessao
@@ -88,7 +82,7 @@ class WhatsappDao {
 
   async SendMessageNoSubscription(client, user){
       try {
-          client.sendText(`${formatarPhoneNumber(user.phone)}`, 'Assine o conselheiro amoroso para continuar! https://ejetaragua.com')
+          client.sendText(`${formatarPhoneNumber(user.phone)}`, 'Assine o conselheiro amoroso para continuar! https://flertai.com')
           .then((result) => {
             console.log('Result: ', result); //return object success
           })
@@ -103,7 +97,7 @@ class WhatsappDao {
 
   async SendMensagemDeAguardo(client, user){
     try {
-        client.sendText(`${formatarPhoneNumber(user.phone)}`, 'Aguarde, já vamos te responder!')
+        client.sendText(`${formatarPhoneNumber(user.phone)}`, '🕢Aguarde, já vamos te responder!')
         .then((result) => {
           console.log('Result: ', result); //return object success
         })
@@ -154,7 +148,7 @@ class WhatsappDao {
       try {
         const conselho = await darConselhosAmorosos(mensagem)
 
-          client.sendText(`${formatarPhoneNumber(user.phone)}`, `Seu conselho é: \n ${conselho}`)
+          client.sendText(`${formatarPhoneNumber(user.phone)}`, `\n ${conselho}`)
           .then((result) => {
             console.log('Result: ', result); //return object success
           })
