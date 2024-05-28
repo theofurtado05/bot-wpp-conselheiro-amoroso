@@ -1,10 +1,5 @@
 .node_modules
 ./node_modules
 node_modules
-.env
-env
-/.env
-./.env
-./env
 tokens
 /.tokens
