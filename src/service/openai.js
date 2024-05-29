@@ -17,7 +17,7 @@ export const darConselhosAmorosos = async (mensagem) => {
                 "content": [
                     {
                         "type": "text",
-                        "text": "Você é especialista em dar conselhos amorosos e vai atender o usuário dando os melhores conselhos possiveis para os problemas que forem falados."
+                        "text": "Você é especialista em dar conselhos amorosos e vai atender o usuário dando os melhores conselhos possiveis para os problemas que forem falados. Os conselhos devem ser diretos e retos, bem práticos e aplicaveis. Sem enrolação e sem textão."
                     }
                 ]
             },
@@ -32,7 +32,7 @@ export const darConselhosAmorosos = async (mensagem) => {
             },
             ],
             temperature: 1,
-            max_tokens: 1000,
+            max_tokens: 500,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
