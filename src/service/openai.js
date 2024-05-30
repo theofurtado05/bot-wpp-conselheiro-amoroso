@@ -2,10 +2,10 @@ import OpenAI from "openai";
 
 const openai = new OpenAI({
 //   apiKey: process.env.OPENAI_API_KEY,
-    apiKey: "sk-proj-fK4UiYEMTkFTg7b1thpXT3BlbkFJn6JMW6LqwVUkSwrNsypl"
+    apiKey: "sk-proj-lKixyHc0Gxjp9MGOviFWT3BlbkFJdCXd2JTgPgwLJxjEUyxl"
 });
 
-//sk-proj-fK4UiYEMTkFTg7b1thpXT3BlbkFJn6JMW6LqwVUkSwrNsypl
+//sk-proj-lKixyHc0Gxjp9MGOviFWT3BlbkFJdCXd2JTgPgwLJxjEUyxl
 
 export const darConselhosAmorosos = async (mensagem) => {
     try {
@@ -32,7 +32,7 @@ export const darConselhosAmorosos = async (mensagem) => {
             },
             ],
             temperature: 1,
-            max_tokens: 500,
+            max_tokens: mensagem.length < 250 ? 500 : 800,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,

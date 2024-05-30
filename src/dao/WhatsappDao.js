@@ -26,17 +26,18 @@ class WhatsappDao {
               await userDao.addMsgOnUser(formatarSemUC(sender.id))
               return
             } else if(user && user.numMsgSent > 0){
-              await this.SendMensagemDeAguardo(client, {phone: sender.id})
+              
 
               if(user.currentPlan != 'Free'){
                 //responder com conselho
-                
+                await this.SendMensagemDeAguardo(client, {phone: sender.id})
                 await this.SendMessageConselho(client, {phone: sender.id}, mensagem)
                 await userDao.addMsgOnUser(formatarSemUC(sender.id))
                 
               } else if (user.numMsgSent < 3){
                 //responder com conselho
                 // await this.SendMensagemDeAguardo(client, {phone: sender.id})
+                await this.SendMensagemDeAguardo(client, {phone: sender.id})
                 await this.SendMessageConselho(client, {phone: sender.id}, mensagem)
                 await userDao.addMsgOnUser(formatarSemUC(sender.id))
 
@@ -87,7 +88,31 @@ class WhatsappDao {
 
   async SendMessageNoSubscription(client, user){
       try {
-          client.sendText(`${formatarPhoneNumber(user.phone)}`, 'Assine o conselheiro amoroso para continuar! https://flertai.com')
+          client.sendText(`${formatarPhoneNumber(user.phone)}`, `*Seu teste grátis chegou ao fim!* 😢
+
+Mas não se preocupe, ainda estou aqui para ajudar você a qualquer momento com conselhos personalizados e instantâneos. Confira nossos planos e continue aproveitando ao máximo todos os benefícios do FlertAI:
+
+Funcionalidades do FlertAI:
+⁠- Resposta imediata a qualquer momento
+⁠- Uso ilimitado
+⁠- Memória de conversa
+⁠- Entende mensagens respondidas
+⁠- Configure em qualquer número de WhatsApp
+
+Planos disponíveis:
+
+✨ Plano Mensal ✨
+Assine por apenas R$27,00 por mês e tenha acesso ilimitado a todas as funcionalidades do FlertAI. https://bit.ly/flertai-plano-mensal
+
+💎 Plano Anual 💎
+Garanta um ano inteiro de conselhos amorosos com um desconto especial! Assine por apenas R$19,70 por mês. https://bit.ly/flertai-plano-anual
+
+Clique no link do plano que mais combina com você e comece a aproveitar agora mesmo!
+
+Se precisar de mais informações ou tiver qualquer dúvida, estou à disposição para ajudar.
+
+Atenciosamente,
+FlertAI ❤️`)
           .then((result) => {
             console.log('Result: ', result); //return object success
           })
