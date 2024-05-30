@@ -3,16 +3,21 @@ import { formatarPhoneNumber } from '../utils/formatarPhoneNumber.js';
 import { UserDao } from './UserDao.js';
 import { formatarSemUC } from '../utils/formatarSemUC.js';
 import { darConselhosAmorosos } from '../service/openai.js';
+import { getAllQuotedMessages } from '../utils/getAllQuotedMsg.js';
 
 const userDao = new UserDao()
 
 class WhatsappDao {
     async start(client) {
         client.onMessage(async (message) => {
-          // console.log("Mensagem recebida: ", message)
+          console.log("Mensagem recebida: ", message)
             const sender = message.sender  // id é o numero@c.us
-            const mensagem = message.body
-            //enviar mensagem para aguardar a resposta "ja vamos te responder, so um momentinho..."
+            // let mensagem = message.body...
+            //....
+
+            let mensagem = getAllQuotedMessages(message)
+            console.log("Mensagem: ", mensagem)
+            
             const user = await userDao.getUserByPhone(formatarSemUC(sender.id))
 
             if((mensagem == '!testegratis' || mensagem == '"!testegratis"') && user.numMsgSent < 2){
@@ -116,8 +121,7 @@ class WhatsappDao {
       // Certifique-se de formatar o número de telefone corretamente
       const formattedPhone = formatarPhoneNumber(user.phone);
   
-      await client.sendText(`${formatarPhoneNumber(user.phone)}`, `
-      Bem vindo ao Flert.Ai, seu conselheiro para relacionamentos 24 horas por dia! \n
+      await client.sendText(`${formatarPhoneNumber(user.phone)}`, `Bem vindo ao Flert.Ai, seu conselheiro para relacionamentos 24 horas por dia! \n
       Este serviço é voltado para questões de amor e relacionamentos. Formule suas perguntas de maneira clara, focando nessas áreas. Evite compartilhar informações sensíveis para preservar sua privacidade. \n
 
       A assistente oferece conselhos construtivos e apoio emocional, garantindo um ambiente respeitoso.\n
@@ -157,7 +161,7 @@ class WhatsappDao {
       try {
         const conselho = await darConselhosAmorosos(mensagem)
 
-          client.sendText(`${formatarPhoneNumber(user.phone)}`, `\n ${conselho}`)
+          client.sendText(`${formatarPhoneNumber(user.phone)}`, `${conselho}`)
           .then((result) => {
             console.log('Result: ', result); //return object success
           })
