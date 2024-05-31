@@ -20,7 +20,7 @@ class WhatsappDao {
             
             const user = await userDao.getUserByPhone(formatarSemUC(sender.id))
 
-            if((mensagem == '!testegratis' || mensagem == '"!testegratis"') && user.numMsgSent < 2){
+            if((mensagem == '!testegratis' || mensagem == '"!testegratis"' || mensagem == 'teste' || mensagem == '!teste' || mensagem == '"!teste"' || mensagem == '!Teste' || mensagem == '!TESTE' || mensagem == 'Teste' || mensagem == '*Teste*' || mensagem == '*teste*' || mensagem == '*!Teste*' || mensagem == '*!teste*') && user.numMsgSent < 2){
               
               await this.SendMensagemIniciarTesteGratis(client, {phone: sender.id})
               await userDao.addMsgOnUser(formatarSemUC(sender.id))
@@ -142,18 +142,20 @@ FlertAI ❤️`)
   
   async SendMensagemBoasVindas(client, user) {
     try {
-  
+      
       // Certifique-se de formatar o número de telefone corretamente
       const formattedPhone = formatarPhoneNumber(user.phone);
   
       await client.sendText(`${formatarPhoneNumber(user.phone)}`, `Bem vindo ao Flert.Ai, seu conselheiro para relacionamentos 24 horas por dia! \n
-      Este serviço é voltado para questões de amor e relacionamentos. Formule suas perguntas de maneira clara, focando nessas áreas. Evite compartilhar informações sensíveis para preservar sua privacidade. \n
+Este serviço é voltado para questões de amor e relacionamentos. Formule suas perguntas de maneira clara, focando nessas áreas. Evite compartilhar informações sensíveis para preservar sua privacidade. \n
 
-      A assistente oferece conselhos construtivos e apoio emocional, garantindo um ambiente respeitoso.\n
+A assistente oferece conselhos construtivos e apoio emocional, garantindo um ambiente respeitoso.\n
       
-      Questões fora desse escopo não serão respondidas. Estarei a disposição para ajudar você com o que for necesário! \n
+Questões fora desse escopo não serão respondidas. Estarei a disposição para ajudar você com o que for necesário! \n
       
-      Aviso Importante Em seu plano Gratuito você tem direito a 2 chamadas, aproveite! \n
+Aviso Importante Em seu plano Gratuito você tem direito a 2 chamadas, aproveite! \n
+
+Digite *!teste* para iniciar seu teste grátis!
       `)
       .then((result) => {
         console.log('Result: ', result)

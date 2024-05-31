@@ -17,6 +17,7 @@
     "nodemon": "^3.1.0",
     "openai": "^4.47.1",
     "prisma": "^5.14.0",
-    "venom-bot": "^5.1.0"
+    "venom-bot": "^5.1.0",
+    "whatsapp-web.js": "^1.23.0"
   }
 }
