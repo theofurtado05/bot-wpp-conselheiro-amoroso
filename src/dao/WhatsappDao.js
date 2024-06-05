@@ -95,19 +95,19 @@ Mas não se preocupe, ainda estou aqui para ajudar você a qualquer momento com 
 Funcionalidades do FlertAI:
 ⁠- Resposta imediata a qualquer momento
 ⁠- Uso ilimitado
-⁠- Memória de conversa
+- Conselho ideal para todo tipo de situação
 ⁠- Entende mensagens respondidas
 ⁠- Configure em qualquer número de WhatsApp
 
 Planos disponíveis:
 
 ✨ Plano Mensal ✨
-Assine por apenas R$27,00 por mês e tenha acesso ilimitado a todas as funcionalidades do FlertAI. https://bit.ly/flertai-plano-mensal
+Assine por apenas *R$27,00* por mês e tenha acesso ilimitado a todas as funcionalidades do FlertAI. https://bit.ly/flertai-plano-mensal
 
 💎 Plano Anual 💎
-Garanta um ano inteiro de conselhos amorosos com um desconto especial! Assine por apenas R$19,70 por mês. https://bit.ly/flertai-plano-anual
+Garanta um ano inteiro de conselhos amorosos com um desconto especial! Assine por apenas *R$19,70* por mês. https://bit.ly/flertai-plano-anual
 
-Clique no link do plano que mais combina com você e comece a aproveitar agora mesmo!
+*Clique no link do plano que mais combina com você e comece a aproveitar agora mesmo!*
 
 Se precisar de mais informações ou tiver qualquer dúvida, estou à disposição para ajudar.
 
@@ -146,14 +146,15 @@ FlertAI ❤️`)
       // Certifique-se de formatar o número de telefone corretamente
       const formattedPhone = formatarPhoneNumber(user.phone);
   
-      await client.sendText(`${formatarPhoneNumber(user.phone)}`, `Bem vindo ao Flert.Ai, seu conselheiro para relacionamentos 24 horas por dia! \n
-Este serviço é voltado para questões de amor e relacionamentos. Formule suas perguntas de maneira clara, focando nessas áreas. Evite compartilhar informações sensíveis para preservar sua privacidade. \n
+      await client.sendText(`${formatarPhoneNumber(user.phone)}`, `*Bem vindo ao Flert.Ai, seu conselheiro para relacionamentos 24 horas por dia!🔥* \n
 
-A assistente oferece conselhos construtivos e apoio emocional, garantindo um ambiente respeitoso.\n
+💌Este serviço é voltado para questões de amor e relacionamentos. Formule suas perguntas de maneira clara, focando nessas áreas. *Envie apenas uma mensagem por vez ate receber uma resposta.* \n
+
+✍️Procure descrever cada situação ao maximo antes de pedir o conselho. Quanto mais informação fornecida, melhor será sua resposta.\n
       
-Questões fora desse escopo não serão respondidas. Estarei a disposição para ajudar você com o que for necesário! \n
+🚨Questões fora desse escopo não serão respondidas. Estarei a disposição para ajudar você com o que for necessário! \n
       
-Aviso Importante Em seu plano Gratuito você tem direito a 2 chamadas, aproveite! \n
+⚠️Aviso Importante: Em seu plano Gratuito você tem direito a 2 chamadas, aproveite! \n
 
 Digite *!teste* para iniciar seu teste grátis!
       `)
