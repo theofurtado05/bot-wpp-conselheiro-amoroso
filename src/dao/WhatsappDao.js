@@ -99,7 +99,9 @@ Funcionalidades do FlertAI:
 ⁠- Entende mensagens respondidas
 ⁠- Configure em qualquer número de WhatsApp
 
-Planos disponíveis:
+👀E o melhor, tudo isso por um valor muito mais em conta do que qualquer mentoria ou curso disponíveis por ai!😉
+
+Escolha o Plano Ideal para você:
 
 ✨ Plano Mensal ✨
 Assine por apenas *R$27,00* por mês e tenha acesso ilimitado a todas as funcionalidades do FlertAI. https://bit.ly/flertai-plano-mensal
